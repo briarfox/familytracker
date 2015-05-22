@@ -108,4 +108,4 @@ v = ui.load_view()
 v['button1'].action = button_tapped
 v['sg2'].action = seg_changed
 
-v.present('fullscreen')
+v.present('fullscreen', hide_title_bar=True)
