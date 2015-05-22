@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 
 SQL_TABLE = '''
 CREATE TABLE tracker (
+tracker_id INTEGER PRIMARY KEY AUTOINCREMENT,
 timestamp DATE,
 time_type TEXT,
 hours REAL);
@@ -15,9 +16,9 @@ hours REAL);
 
 def create_pie(info):
     # make a square figure and axes
-    print info
     plt.figure(1, figsize=(6,6))
     ax = plt.axes([0.1, 0.1, 0.8, 0.8])
+    #ax = plt.axes([0.5, 0.5, 0.5, 0.5])
 
     # The slices will be ordered and plotted counter-clockwise.
     labels = 'Wife', 'Family', 'Friends', 'Solo'
@@ -69,11 +70,10 @@ def button_tapped(sender):
     date = datetime.date(datetime.now())
     time_type = v['types'].segments[v['types'].selected_index]
     hours = float(v['tb1'].text)
-    print date
     if hours != '':
         conn = sqlite3.connect('tracker.db')
         cur = conn.cursor()
-        cur.execute("INSERT INTO tracker VALUES(?, ?, ?)", (date, time_type, hours,))
+        cur.execute("INSERT INTO tracker(timestamp, time_type, hours) VALUES(?, ?, ?)", (date, time_type, hours,))
         conn.commit()
         conn.close()
         v['tb1'].text = ''
